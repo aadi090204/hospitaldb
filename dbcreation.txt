@@ -1,0 +1,49 @@
+> use hospital;
+Database changed
+mysql> CREATE TABLE Patients (
+    ->     PatientID INT PRIMARY KEY,
+    ->     Name VARCHAR(50),
+    ->     Age INT,
+    ->     Gender VARCHAR(10),
+    ->     ContactNumber VARCHAR(15)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE Doctors (
+    ->     DoctorID INT PRIMARY KEY,
+    ->     Name VARCHAR(50),
+    ->     Specialization VARCHAR(50),
+    ->     ContactNumber VARCHAR(15),
+    ->     DepartmentID INT
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE Appointments (
+    ->     AppointmentID INT PRIMARY KEY,
+    ->     PatientID INT,
+    ->     DoctorID INT,
+    ->     AppointmentDate DATE,
+    ->     FOREIGN KEY (PatientID) REFERENCES Patients(PatientID),
+    ->     FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE Departments (
+    ->     DepartmentID INT PRIMARY KEY,
+    ->     DepartmentName VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.01 sec)
+mysql> CREATE TABLE LoginDetails (
+    ->     Username VARCHAR(50) PRIMARY KEY,
+    ->     Password VARCHAR(50),
+    ->     PatientID INT,
+    ->     FOREIGN KEY (PatientID) REFERENCES Patients(PatientID)
+    -> );
+
+
+mysql> CREATE TABLE DoctorLoginDetails (
+    ->     Username VARCHAR(50) PRIMARY KEY,
+    ->     Password VARCHAR(255) NOT NULL,
+    ->     DoctorID INT,
+    ->     FOREIGN KEY (DoctorID) REFERENCES Doctors(DoctorID) ON DELETE CASCADE
+    -> );
